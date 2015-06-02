@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender class="org.apache.log4j.DailyRollingFileAppender"
+		name="pcapTest">
+		<param value="pcap-test.log" name="File" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param
+				value="%d %p %t [%c] [%X{spclient}] [%X{spdevice}] [%X{spsessid}] [%X{spusername}] - %m%n"
+				name="ConversionPattern" />
+		</layout>
+	</appender>
+	<appender class="org.apache.log4j.AsyncAppender" name="Async_pcapTest">
+		<param name="BufferSize" value="1024" />
+		<param name="Blocking" value="true" />
+		<appender-ref ref="pcapTest" />
+	</appender>
+	<logger name="com.personalcapital">
+		<level value="DEBUG" />
+		<appender-ref ref="Async_pcapTest" />
+	</logger>
+	<logger name="org.apache">
+		<level value="INFO" />
+		<appender-ref ref="Async_pcapTest" />
+	</logger>
+	<logger name="org.springframework">
+		<level value="INFO" />
+		<appender-ref ref="Async_pcapTest" />
+	</logger>
+	<logger name="net.sf.ehcache.config.ConfigurationFactory">
+		<level value="INFO" />
+		<appender-ref ref="Async_pcapTest" />
+	</logger>
+	<logger name="org.hibernate.SQL" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="Async_pcapTest" />
+	</logger>
+
+	<root>
+		<level value="WARN" />
+	</root>
+</log4j:configuration>
